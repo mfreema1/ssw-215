@@ -6,6 +6,10 @@
 	margin-top: 100px;
 }
 
+#visible-camelot {
+	visibility: hidden;
+}
+
 .knight-text {
 	font-size: 36px;
 }
