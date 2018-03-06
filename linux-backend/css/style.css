@@ -1,0 +1,96 @@
+.camelot {
+	/*nothing stylistic, just a fun place to live*/
+}
+
+.camelot-roof {
+	margin-top: 100px;
+}
+
+#centered {
+	width: 30%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.contained {
+	margin: 0, auto;
+}
+
+#visible-camelot {
+	visibility: hidden;
+}
+
+.knight-text {
+	font-size: 36px;
+}
+
+.blue-text {
+	color: blue;
+}
+
+.gray-text {
+	color: gray;
+}
+
+.green-text {
+	color: green;
+}
+
+.orange-text {
+	color: orange;
+}
+
+.red-text {
+	color: red;
+}
+
+.purple-text {
+	color: purple;
+}
+
+.table-column-text > th {
+	width: 200px;
+}
+
+.table-outline {
+	border: 2px solid blue;
+	text-align: center;
+}
+
+.cascade-text-parent {
+	position: relative
+	padding-left: 15%;
+}
+
+.cascade-text-child {
+	position: absolute;
+	padding-left: 15%
+}
+
+/*unfortunately can't find a better
+way to do this*/
+.first-increment {
+	margin-left: 15%;
+}
+
+.second-increment {
+	margin-left: 30%;
+}
+
+.third-increment {
+	margin-left: 45%;
+}
+
+.fourth-increment {
+	margin-left: 60%;
+}
+
+.fifth-increment {
+	margin-left: 75%;
+}
+
+.king-return {
+	font-size: 30px;
+	float: right;
+}
