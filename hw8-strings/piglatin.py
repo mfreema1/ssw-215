@@ -1,17 +1,23 @@
-vowels = ['a', 'e', 'i', 'o', 'u']
-def place_at_end(str):
-    return str[1:] + str[0]
+#Mark Freeman
+vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']
+def getIndexOfVowel(str):
+    index = 0
+    for letter in str:
+        if letter in vowels:
+            return index
+        else:
+            index += 1
 
 def translate(str):
     arr = str.split()
+    latin_arr = []
     for word in arr:
         if word[0] in vowels:
-            word += "way"
+            latin_arr.append(word + "way")
         else:
-            while(word[0] not in vowels):   #move first character to end until vowel
-                word = place_at_end(word)
-            word += "ay"
-    return arr.join(" ")
+            index = getIndexOfVowel(word)
+            latin_arr.append(word[index:] + word[:index] + "ay")
+    return " ".join(latin_arr)
 
 if __name__ == "__main__":
     while(1):
