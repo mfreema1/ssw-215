@@ -1,3 +1,16 @@
 from django.contrib import admin
 
-# Register your models here.
+# import models
+from .models import DailyEntry, WeeklyEntry, MonthlyEntry
+
+@admin.register(DailyEntry)
+class DailyEntryAdmin(admin.ModelAdmin):
+    list_display = ('entry_date', 'affirmation')
+
+@admin.register(WeeklyEntry)
+class WeeklyEntryAdmin(admin.ModelAdmin):
+    list_display = ('week_start', 'week_end')
+
+@admin.register(MonthlyEntry)
+class MonthlyEntryAdmin(admin.ModelAdmin):
+    list_display = ('habit', 'focus', 'month')
