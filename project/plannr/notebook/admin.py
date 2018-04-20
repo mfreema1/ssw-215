@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # import models
-from .models import DailyEntry, WeeklyEntry, MonthlyEntry
+from .models import DailyEntry, WeeklyEntry, MonthlyEntry, Task
 
 @admin.register(DailyEntry)
 class DailyEntryAdmin(admin.ModelAdmin):
@@ -14,3 +14,7 @@ class WeeklyEntryAdmin(admin.ModelAdmin):
 @admin.register(MonthlyEntry)
 class MonthlyEntryAdmin(admin.ModelAdmin):
     list_display = ('habit', 'focus', 'month')
+
+@admin.register(Task)
+class TaskAdmin(admin.ModelAdmin):
+    list_display = ('title', 'start_time', 'end_time', 'description', 'is_complete')

@@ -1,5 +1,16 @@
-{% extends "base_generic.html" %}
-
+{% extends "notebook/dailysection.html" %}
 {% block content %}
-
+    <h1>{{ dailyentry.entry_date }}</h1>
+    {% if dailyentry.task_set %}
+    <ul>
+        {% for task in dailyentry.task_set.all %}
+        <li>
+            {{ task.title }}
+        </li>
+        <li>{{ task.description }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <!-- We have access to our tasks because it is passed in
+    via our context from the views.py file -->
 {% endblock %}

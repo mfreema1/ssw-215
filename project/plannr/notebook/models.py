@@ -52,6 +52,7 @@ class MonthlyEntry(models.Model):
 
 #Daily tables
 class Task(models.Model):
+    entry = models.ForeignKey(DailyEntry, on_delete=models.SET_NULL, null=True)
     start_time = models.TimeField()
     end_time = models.TimeField()
     is_complete = models.BooleanField()

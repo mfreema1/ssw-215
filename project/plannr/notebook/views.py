@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import DailyEntry #and other things
+from .models import DailyEntry, Task #and other things
 # Create your views here.
 def index(request):
     """
@@ -12,6 +12,7 @@ def index(request):
     )
 # empty context because nothing in our template actually
 # needs to be filled
+
 from django.views.generic.list import ListView
 class DailyListView(ListView):
     model = DailyEntry # import that
@@ -21,4 +22,8 @@ class DailyListView(ListView):
 from django.views.generic.detail import DetailView
 class DailyDetailView(DetailView):
     model = DailyEntry
-    #return a context
+    """
+    Run some pre-processing on the data model.  Grab all of the 
+    tasks for our given entry and throw them out.
+    """
+    
