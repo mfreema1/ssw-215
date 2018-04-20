@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Your Entries:</h1>
+
+    {% if dailyentry_list %}
+    <ul>
+        {% for entry in dailyentry_list %}
+        <li>
+            <a href="{{ entry.get_absolute_url }}">{{ entry.date }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>It appears you have no entries.</p>
+    {% endif %}
+{% endblock %}

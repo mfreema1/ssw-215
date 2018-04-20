@@ -1,12 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 import uuid
 #Main tables
 class DailyEntry(models.Model):
-    daily_entry_id = models.UUIDField(primary_key=True)
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     entry_date = models.DateField()
     affirmation = models.TextField()
+
+    def __str__(self):
+        """
+        We're going to use the date of entry to display it
+        """
+        return str(self.entry_date)
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access a detail of this entry
+        """
+        return reverse('daily_detail', args=[str(self.id)])
 
 class WeeklyEntry(models.Model):
     weekly_entry_id = models.UUIDField(primary_key=True)
