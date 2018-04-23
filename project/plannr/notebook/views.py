@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import DailyEntry, Task #and other things
+from .models import DailyEntry, Task, WeeklyEntry #and other things
 # Create your views here.
 def index(request):
     """
@@ -15,9 +15,8 @@ def index(request):
 
 from django.views.generic.list import ListView
 class DailyListView(ListView):
-    model = DailyEntry # import that
+    model = DailyEntry
     paginate_by = 10
-    #return a context
 
 from django.views.generic.detail import DetailView
 class DailyDetailView(DetailView):
@@ -26,4 +25,14 @@ class DailyDetailView(DetailView):
     Run some pre-processing on the data model.  Grab all of the 
     tasks for our given entry and throw them out.
     """
-    
+
+class WeeklyListView(ListView):
+    model = WeeklyEntry
+    paginate_by = 10
+
+class WeeklyDetailView(DetailView):
+    model = WeeklyEntry
+    """
+    Shouldn't need to run any kind of pre-processing here.  We can just grab all of our
+    foreign keys from directly inside of the template
+    """
