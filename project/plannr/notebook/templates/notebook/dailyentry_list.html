@@ -1,20 +1,15 @@
-{% extends "base_generic.html" %}
-
-{%block page_marker %}
-    <li>
-        <a href="daily/" style="background: #1976D2">Daily Entries</a>
-    </li>
-    <li>
-        <a href="weekly/">Weekly Entries</a>
-    </li>
-    <li>
-        <a href="monthly/">Monthly Entries</a>
-    </li>
-{% endblock %}
+{% extends "notebook/dailysection.html" %}
 
 {% block content %}
     <h1>Your Daily Entries:</h1>
-
+    <p>Here you can view all of the daily entries you've made in your Plannr.  Daily entries will generally consists of a few things -- such as an affirmation,
+        which is basically a suggestion to yourself conforming something that you believe, a set of tasks you'd like to get done that day, a few things you're
+        grateful for, and a few things you're looking forward to.
+    </p>
+    <p>These things are chosen to help cultivate happiness in the user, as research has shown that focusing on these things throughout your day can make a
+        difference in how you perceive the world around you.  Check back into your daily entries to mark tasks as complete or update on how your day went, as well
+        as to mark down anything you think you did well or need to improve on.  Above all, have fun with it -- it's you Plannr after all.
+    </p>
     {% if dailyentry_list %}
     <ul>
         {% for entry in dailyentry_list %}

@@ -4,7 +4,7 @@ from django.urls import reverse
 import uuid
 #Main tables
 class DailyEntry(models.Model):
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     entry_date = models.DateField()
     affirmation = models.TextField()
 
@@ -21,14 +21,12 @@ class DailyEntry(models.Model):
         return reverse('daily_detail', args=[str(self.id)])
 
 class WeeklyEntry(models.Model):
-    weekly_entry_id = models.UUIDField(primary_key=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     week_start = models.DateField()
-    week_end = models.DateField()
+    #week_end = models.DateField() #TODO: remove this
 
 class MonthlyEntry(models.Model):
-    monthly_entry_id = models.UUIDField(primary_key=True)
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     habit = models.CharField(max_length=20)
     focus = models.CharField(max_length=20)
     MONTHS_IN_YEAR = (
@@ -52,7 +50,7 @@ class MonthlyEntry(models.Model):
 
 #Daily tables
 class Task(models.Model):
-    entry = models.ForeignKey(DailyEntry, on_delete=models.SET_NULL, null=True)
+    entry = models.ForeignKey(DailyEntry, on_delete=models.CASCADE, null=True)
     start_time = models.TimeField()
     end_time = models.TimeField()
     is_complete = models.BooleanField()
