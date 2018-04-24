@@ -23,7 +23,6 @@ class DailyEntry(models.Model):
 class WeeklyEntry(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     week_start = models.DateField()
-    #week_end = models.DateField() #TODO: remove this
 
 class MonthlyEntry(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

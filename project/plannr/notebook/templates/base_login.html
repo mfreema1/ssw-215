@@ -1,0 +1,12 @@
+{% extends "main_base.html" %}
+
+{% block specific_stylesheets %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/scrolling-nav.css' %}">
+{% endblock %}
+
+{% block specific_scripts %}
+{% load static %}
+<script src="{% static 'js/jquery.easing.min.js' %}'"></script>
+<script src="{% static 'js/scrolling-nav.js' %}'"></script>
+{% endblock %}

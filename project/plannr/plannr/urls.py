@@ -18,11 +18,16 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('notebook/', include('notebook.urls'))
+    path('notebook/', include('notebook.urls')),
 ]
 
 #redirect the root view to our notebook app
 from django.views.generic import RedirectView
 urlpatterns += [
     path('', RedirectView.as_view(url='/notebook/')),
+]
+
+# set up our django authentication view
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
