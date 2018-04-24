@@ -23,7 +23,7 @@ class DailyEntry(models.Model):
 class WeeklyEntry(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     week_start = models.DateField()
-    week_end = models.DateField() #TODO: remove this
+    #week_end = models.DateField() #TODO: remove this
 
 class MonthlyEntry(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -58,47 +58,52 @@ class Task(models.Model):
     description = models.TextField()
 
 class ThankfulFor(models.Model):
+    entry = models.ForeignKey(DailyEntry, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=32)
     description = models.TextField()
 
 class LookingForwardTo(models.Model):
+    entry = models.ForeignKey(DailyEntry, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=32)
     description = models.TextField()
 
 #Weekly tables
 class Project(models.Model):
-    weekly_entry_id = models.ForeignKey(
-        'WeeklyEntry',
-        on_delete=models.CASCADE
-    )
+    entry = models.ForeignKey(WeeklyEntry, on_delete=models.CASCADE, null=True)
     is_complete = models.BooleanField()
     title = models.CharField(max_length=32)
     description = models.TextField()
 
 class WeeklyGoal(models.Model):
+    entry = models.ForeignKey(WeeklyEntry, on_delete=models.CASCADE, null=True)
+    #probably some way to inherit this
     GOAL_TYPES = (
         ('FAMILY', 'Family'),
         ('WORK', 'Work'),
         ('RELATIONSHIP', 'Relationship'),
         ('PERSONAL', 'Personal')
     )
-    weekly_goal = models.CharField(
+    goal_type = models.CharField(
         max_length=32,
         choices = GOAL_TYPES
     )
     title = models.CharField(max_length=32)
     description = models.TextField()
+    is_complete = models.BooleanField()
 
 #Monthly tables
 class Obstacle(models.Model):
+    entry = models.ForeignKey(MonthlyEntry, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=32)
     description = models.TextField()
 
 class Insight(models.Model):
+    entry = models.ForeignKey(MonthlyEntry, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=32)
     description = models.TextField()
 
 class MonthlyGoal(models.Model):
+    entry = models.ForeignKey(MonthlyEntry, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=32)
     description = models.TextField()
     is_complete = models.BooleanField()
