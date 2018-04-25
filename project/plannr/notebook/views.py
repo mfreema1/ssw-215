@@ -23,27 +23,23 @@ from django.views.generic.list import ListView
 class DailyListView(LoginRequiredMixin, ListView):
     model = DailyEntry
     login_url = '/accounts/login/'
-    redirect_field_name = '/notebook/'
     paginate_by = 10
 
 from django.views.generic.detail import DetailView
 class DailyDetailView(LoginRequiredMixin, DetailView):
     model = DailyEntry
     login_url = '/accounts/login/'
-    #redirect_field_name = '/notebook/daily/'
     
 
 class WeeklyListView(LoginRequiredMixin, ListView):
     model = WeeklyEntry
     login_url = '/accounts/login/'
-    #redirect_field_name = '/notebook/weekly/'
     #order this somehow
     paginate_by = 10
 
 class WeeklyDetailView(LoginRequiredMixin, DetailView):
     model = WeeklyEntry
     login_url = '/accounts/login/'
-    #redirect_field_name = '/notebook/weekly/'
     """
     Shouldn't need to run any kind of pre-processing here.  We can just grab all of our
     foreign keys from directly inside of the template
