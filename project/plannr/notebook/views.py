@@ -36,6 +36,14 @@ from django.views.generic.detail import DetailView
 class DailyDetailView(LoginRequiredMixin, DetailView):
     model = DailyEntry
     login_url = '/accounts/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super(DailyDetailView, self).get_context_data(**kwargs)
+        if self.object and self.request.user.is_authenticated:
+            context['has_access_to_entry'] = self.object.is_viewable_by(self.request.user)
+        context['user_from_req'] = self.request.user
+        context['user_from_mod'] = self.object.getUser()
+        return context
     
 
 class WeeklyListView(LoginRequiredMixin, ListView):
