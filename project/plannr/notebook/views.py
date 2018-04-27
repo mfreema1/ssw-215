@@ -59,6 +59,30 @@ class WeeklyDetailView(LoginRequiredMixin, DetailView):
     foreign keys from directly inside of the template
     """
 
+from .forms import SignupForm
+from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate
+def signup(request):
+    """
+    Allow for the sign up of a new user
+    """
+    if request.method == 'POST':
+        signup_form = SignupForm(request.POST)
+        if signup_form.is_valid():
+            first_name = signup_form.cleaned_data.get('first_name')
+            last_name = signup_form.cleaned_data.get('last_name')
+            username = signup_form.cleaned_data.get('username')
+            email = signup_form.cleaned_data.get('email')
+            password = signup_form.cleaned_data.get('password1')
+            user = User.objects.create(first_name=first_name, last_name=last_name, username=username,
+            email=email, password=password)
+            login(request, user)
+            redirect('/notebook/daily')
+            #save a new user model
+    else:
+        signup_form = SignupForm()
+    return render(request, 'signup.html', context={'signup_form': signup_form})
+
 from django.forms.formsets import formset_factory
 from django.shortcuts import redirect
 from .forms import DailyEntryForm, TaskForm, LookingForwardToForm, ThankfulForForm
@@ -91,9 +115,7 @@ def add_daily_entry(request):
             entry_date = daily_entry_form.cleaned_data.get('entry_date')
             affirmation = daily_entry_form.cleaned_data.get('affirmation')
             entry = DailyEntry.objects.create(author=author, entry_date=entry_date, affirmation=affirmation)
-
             #immediately grab the instance we just created.  Need this for foreign keys
-            #entry = DailyEntry.objects.get(author=author, entry_date=entry_date, affirmation=affirmation)
 
             for task_form in task_form_set:
                 title = task_form.cleaned_data.get('title')

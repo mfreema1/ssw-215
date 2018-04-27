@@ -4,6 +4,7 @@ from . import views
 #map our index function to the root of our notebook app 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('signup/', views.signup, name='signup'),
     path('daily/', views.DailyListView.as_view(), name='daily_list'),
     path('daily/add', views.add_daily_entry, name='daily_entry_add'),
     path('daily/<int:pk>', views.DailyDetailView.as_view(), name='daily_detail'),
