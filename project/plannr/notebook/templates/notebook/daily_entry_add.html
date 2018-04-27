@@ -1,0 +1,33 @@
+{% load static %}
+
+<form action="{% url 'daily_entry_add' %}" method="post">
+    {% csrf_token %}
+    {{ daily_entry_form }}
+
+    {{ task_form_set.management_form }}
+
+    {% for task_form in task_form_set %}
+        <div class="task-form-set">
+            {{ task_form }}
+            <!-- {{ task_form.start_time.label_tag }} -->
+            <!-- {{ task_form.start_time }}
+            {{ task_form.end_time.label_tag }}
+            {{ task_form.end_time }}
+            {{ task_form.is_complete.label_tag }}
+            {{ task_form.is_complete }}
+            {{ task_form.description.label_tag }}
+            {{ task_form.description }} -->
+        </div>
+    {% endfor %}
+    <input type="submit" value="Add Entry" />
+</form>
+
+<!-- Add in our scripts to handle the dynamic formsetting -->
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery_formset.js' %}"></script>
+<script>
+    $('.task-form-set').formset({
+        addText: 'Add task',
+        deleteText: 'Remove'
+    });
+</script>

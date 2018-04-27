@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('daily/', views.DailyListView.as_view(), name='daily_list'),
+    path('daily/add', views.add_daily_entry, name='daily_entry_add'),
     path('daily/<int:pk>', views.DailyDetailView.as_view(), name='daily_detail'),
     path('weekly/', views.WeeklyListView.as_view(), name='weekly_list'),
     path('weekly/<int:pk>', views.WeeklyDetailView.as_view(), name='weekly_detail'),

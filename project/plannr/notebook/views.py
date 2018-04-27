@@ -15,6 +15,7 @@ def index(request):
         'index.html',
         context = {}
     )
+
 # empty context because nothing in our template actually
 # needs to be filled
 
@@ -41,8 +42,6 @@ class DailyDetailView(LoginRequiredMixin, DetailView):
         context = super(DailyDetailView, self).get_context_data(**kwargs)
         if self.object and self.request.user.is_authenticated:
             context['has_access_to_entry'] = self.object.is_viewable_by(self.request.user)
-        context['user_from_req'] = self.request.user
-        context['user_from_mod'] = self.object.getUser()
         return context
     
 
@@ -59,3 +58,71 @@ class WeeklyDetailView(LoginRequiredMixin, DetailView):
     Shouldn't need to run any kind of pre-processing here.  We can just grab all of our
     foreign keys from directly inside of the template
     """
+
+from django.forms.formsets import formset_factory
+from django.shortcuts import redirect
+from .forms import DailyEntryForm, TaskForm, LookingForwardToForm, ThankfulForForm
+@login_required
+def add_daily_entry(request):
+    """
+    Allow a user to add to their daily entries
+    """
+    # Generate our formset classes to create instances from
+    TaskFormSet = formset_factory(TaskForm)
+    LookingForwardFormSet = formset_factory(LookingForwardToForm)
+    ThankfulForFormSet = formset_factory(ThankfulForForm)
+
+    #handle the response to the form
+    if request.method == 'POST':
+
+        # make our instances
+        daily_entry_form = DailyEntryForm(request.POST)
+        task_form_set = TaskFormSet(request.POST)
+        looking_forward_form_set = LookingForwardFormSet(request.POST)
+        thankful_for_form_set = ThankfulForFormSet(request.POST)
+
+        if daily_entry_form.is_valid() and task_form_set.is_valid():
+            tasks = []
+            looking = []
+            thankful = []
+            
+            #first save our entry
+            author = request.user
+            entry_date = daily_entry_form.cleaned_data.get('entry_date')
+            affirmation = daily_entry_form.cleaned_data.get('affirmation')
+            entry = DailyEntry.objects.create(author=author, entry_date=entry_date, affirmation=affirmation)
+
+            #immediately grab the instance we just created.  Need this for foreign keys
+            #entry = DailyEntry.objects.get(author=author, entry_date=entry_date, affirmation=affirmation)
+
+            for task_form in task_form_set:
+                title = task_form.cleaned_data.get('title')
+                start_time = task_form.cleaned_data.get('start_time')
+                end_time = task_form.cleaned_data.get('end_time')
+                is_complete = task_form.cleaned_data.get('is_complete')
+                description = task_form.cleaned_data.get('description')
+            #TODO: handle the rest of the forms
+
+                if title and start_time and end_time and is_complete and description:
+                    tasks.append(Task(entry=entry, title=title, start_time=start_time,
+                    end_time=end_time, is_complete=is_complete, description=description))
+
+                Task.objects.bulk_create(tasks)
+                return redirect('/notebook/daily')
+
+    else:
+        daily_entry_form = DailyEntryForm()
+        task_form_set = TaskFormSet()
+        looking_forward_form_set = LookingForwardFormSet()
+        thankful_for_form_set = ThankfulForFormSet()
+
+    context = {
+        'daily_entry_form': daily_entry_form,
+        'task_form_set': task_form_set,
+        'looking_forward_form_set': looking_forward_form_set,
+        'thankful_for_form_set': thankful_for_form_set
+    }
+
+    return render(request, 'notebook/daily_entry_add.html', context)
+
+

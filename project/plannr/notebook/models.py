@@ -23,10 +23,6 @@ class DailyEntry(models.Model):
     def is_viewable_by(self, user):
         return self.author == user
 
-    def getUser(self):
-        return self.author
-        #this may need to be inspected to ensure data privacy
-
 class WeeklyEntry(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     week_start = models.DateField()
