@@ -62,6 +62,7 @@ class WeeklyDetailView(LoginRequiredMixin, DetailView):
 from .forms import SignupForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
+from django.shortcuts import reverse
 def signup(request):
     """
     Allow for the sign up of a new user
@@ -77,7 +78,7 @@ def signup(request):
             user = User.objects.create(first_name=first_name, last_name=last_name, username=username,
             email=email, password=password)
             login(request, user)
-            redirect('/notebook/daily')
+            return redirect('/notebook/')
             #save a new user model
     else:
         signup_form = SignupForm()
