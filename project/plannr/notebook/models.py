@@ -8,6 +8,9 @@ class DailyEntry(models.Model):
     entry_date = models.DateField()
     affirmation = models.TextField()
 
+    class Meta:
+        ordering = ["entry_date"]
+
     def __str__(self):
         """
         We're going to use the date of entry to display it
@@ -26,6 +29,9 @@ class DailyEntry(models.Model):
 class WeeklyEntry(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     week_start = models.DateField()
+
+    class Meta:
+        ordering = ['week_start']
 
 class MonthlyEntry(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

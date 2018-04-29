@@ -32,7 +32,7 @@
                             <label class="sr-only" for="id_password" ></label>
                             <input class="form-control" type="password" name="password" placeholder="Password" />
                         </div>
-                        <input type="submit" class="btn btn-primary" value="login" />
+                        <input type="submit" class="btn btn-primary" value="Login" />
                         <input type="hidden" name="next" value="{{ next }}" />
                     </form>
                     <br>
@@ -41,5 +41,31 @@
                 </div>
             </div>
         </div>
-    </section>    
+    </section>
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>About the Plannr Project</h1>
+                    <hr>
+                    <p>Hi! I'm actually a project created in one month 
+                    by two developers at Stevens Institute of Technology!  I was
+                    made as an introductory effort in Django with no prior knowledge
+                    of the framework, so please excuse any mistakes you may find during
+                    use.  In fact, if you find any bugs, please send them along to
+                    Mark at <a href="mailto:mfreema1@stevens.edu">his email.</a>
+                    </p>
+                    <br>
+                    <p>I'm currently in prototype stages and am being offered as a free
+                    service for people to keep track of their lives via the web.  We
+                    wanted to operate off of a similar model to some popular planning
+                    systems in print, so that's essentially what we ported to web
+                    through this project.  At it's heart, this is a CRUD application,
+                    so Django was chosen to facilitate much of the effort of those
+                    operations. (This project had a deadline after all!)
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>   
 {% endblock %}
