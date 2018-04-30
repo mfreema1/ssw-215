@@ -28,7 +28,6 @@ from django.views.generic.list import ListView
 class DailyListView(LoginRequiredMixin, ListView):
     model = DailyEntry
     login_url = '/accounts/login/'
-    #order this by date
     paginate_by = 10
     def get_queryset(self):
         return DailyEntry.objects.filter(author=self.request.user)
@@ -48,7 +47,6 @@ class DailyDetailView(LoginRequiredMixin, DetailView):
 class WeeklyListView(LoginRequiredMixin, ListView):
     model = WeeklyEntry
     login_url = '/accounts/login/'
-    #order this somehow
     paginate_by = 10
 
 class WeeklyDetailView(LoginRequiredMixin, DetailView):
@@ -126,7 +124,8 @@ def add_daily_entry(request):
                 description = task_form.cleaned_data.get('description')
             #TODO: handle the rest of the forms
 
-                if title and start_time and end_time and is_complete and description:
+                #so long as the task has a title, append it to the list of tasks
+                if title:
                     tasks.append(Task(entry=entry, title=title, start_time=start_time,
                     end_time=end_time, is_complete=is_complete, description=description))
 

@@ -1,27 +1,53 @@
+{% extends "main_base.html" %}
 {% load static %}
+{% block main_content %}
+<div class="container">
+    <div class="row" style="margin-top: 10%; margin-bottom: 10%">
+        <div class="col-md-6">
+            <h1>New Daily Entry</h1>
+            <form action="{% url 'daily_entry_add' %}" method="post" class="inline-form">
+                {% csrf_token %}
+                {{ daily_entry_form }}
 
-<form action="{% url 'daily_entry_add' %}" method="post">
-    {% csrf_token %}
-    {{ daily_entry_form }}
+                {{ task_form_set.management_form }}
 
-    {{ task_form_set.management_form }}
-
-    {% for task_form in task_form_set %}
-        <div class="task-form-set">
-            {{ task_form }}
-            <!-- {{ task_form.start_time.label_tag }} -->
-            <!-- {{ task_form.start_time }}
-            {{ task_form.end_time.label_tag }}
-            {{ task_form.end_time }}
-            {{ task_form.is_complete.label_tag }}
-            {{ task_form.is_complete }}
-            {{ task_form.description.label_tag }}
-            {{ task_form.description }} -->
+                {% for task_form in task_form_set %}
+                    <div class="task-form-set">
+                        <h3>New Task</h3>
+                        <div class="form-group">
+                            {{ task_form.title.label_tag }}
+                            {{ task_form.title }}
+                            {{ task_form.title.help_text }}
+                        </div>
+                        <div class="form-group">
+                            {{ task_form.start_time.label_tag }}
+                            {{ task_form.start_time }}
+                        </div>
+                        <div class="form-group">
+                            {{ task_form.end_time.label_tag }}
+                            {{ task_form.end_time }}
+                        </div>
+                        <div class="form-group">
+                            {{ task_form.description.label_tag }}
+                            {{ task_form.description }}
+                        </div>
+                        <div class="form-group">
+                            {{ task_form.is_complete.label_tag }}
+                            {{ task_form.is_complete }}
+                        </div>
+                    </div>
+                {% endfor %}
+                <br>
+                <br>
+                <input type="submit" value="Add Entry" class="btn btn-primary"/>
+            </form>
         </div>
-    {% endfor %}
-    <input type="submit" value="Add Entry" />
-</form>
+    </div>
+</div>
+{% endblock %}
 
+
+{% block specific_scripts %}
 <!-- Add in our scripts to handle the dynamic formsetting -->
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/jquery_formset.js' %}"></script>
@@ -31,3 +57,5 @@
         deleteText: 'Remove'
     });
 </script>
+{% endblock %}
+

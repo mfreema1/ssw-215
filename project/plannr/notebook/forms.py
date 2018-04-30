@@ -7,10 +7,24 @@ class DailyEntryForm(ModelForm):
         model = DailyEntry
         fields = ['entry_date', 'affirmation']
 
+    def __init__(self, *args, **kwargs):
+        super(DailyEntryForm, self).__init__(*args, **kwargs)
+        self.fields['entry_date'].widget.attrs.update({'class':'form-control'})
+        self.fields['affirmation'].widget.attrs.update({'class':'form-control'})
+
+
 class TaskForm(ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'start_time', 'end_time', 'description', 'is_complete']
+        
+    def __init__(self, *args, **kwargs):
+        super(TaskForm, self).__init__(*args, **kwargs)
+        self.fields['title'].widget.attrs.update({'class':'form-control'})
+        self.fields['start_time'].widget.attrs.update({'class':'form-control'})
+        self.fields['end_time'].widget.attrs.update({'class':'form-control'})
+        self.fields['description'].widget.attrs.update({'class':'form-control'})
+        #self.fields['is_complete'].widget.attrs.update({'class':'form-control'})
 
 class LookingForwardToForm(ModelForm):
     class Meta:
