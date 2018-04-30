@@ -53,10 +53,12 @@ class WeeklyListView(LoginRequiredMixin, ListView):
 class WeeklyDetailView(LoginRequiredMixin, DetailView):
     model = WeeklyEntry
     login_url = '/accounts/login/'
-    """
-    Shouldn't need to run any kind of pre-processing here.  We can just grab all of our
-    foreign keys from directly inside of the template
-    """
+
+    def get_context_data(self, **kwargs):
+        context = super(WeeklyDetailView, self).get_context_data(**kwargs)
+        if self.object and self.request.user.is_authenticated:
+            context['has_access_to_entry'] = self.object.is_viewable_by(self.request.user)
+        return context
 
 from .forms import SignupForm
 from django.contrib.auth.models import User
@@ -159,3 +161,63 @@ def add_daily_entry(request):
     }
 
     return render(request, 'notebook/daily_entry_add.html', context)
+
+from .forms import WeeklyEntryForm, ProjectForm, WeeklyGoalForm
+@login_required
+def add_weekly_entry(request):
+    """
+    Allow a user to add a weekly entry to their Plannr
+    """
+    # Generate our formset classes to create instances from
+    ProjectFormSet = formset_factory(ProjectForm)
+    WeeklyGoalFormSet = formset_factory(WeeklyGoalForm)
+
+    if request.method == "POST":
+
+        #generate those instances
+        weekly_entry_form = WeeklyEntryForm(request.POST)
+        project_form_set = ProjectFormSet(request.POST)
+        weekly_goal_form_set = WeeklyGoalFormSet(request.POST)
+
+        if weekly_entry_form.is_valid() and project_form_set.is_valid() and weekly_goal_form_set.is_valid():
+            projects = []
+            goals = []
+
+            author = request.user
+            week_start = weekly_entry_form.cleaned_data.get('week_start')
+            entry = WeeklyEntry.objects.create(author=author, week_start=week_start)
+            #grab that entry for later use
+
+            for project_form in project_form_set:
+                title = project_form.cleaned_data.get('title')
+                description = project_form.cleaned_data.get('description')
+                is_complete = project_form.cleaned_data.get('is_complete')
+                if title:
+                    projects.append(Project(entry=entry, title=title, description=description, 
+                    is_complete=is_complete))
+                
+            for weekly_goal_form in weekly_goal_form_set:
+                title = weekly_goal_form.cleaned_data.get('title')
+                description = weekly_goal_form.cleaned_data.get('description')
+                goal_type = weekly_goal_form.cleaned_data.get('goal_type')
+                is_complete = weekly_goal_form.cleaned_data.get('is_complete')
+                if title:
+                    goals.append(WeeklyGoal(entry=entry, title=title,
+                    description=description, goal_type=goal_type, is_complete=is_complete))
+            
+            Project.objects.bulk_create(projects)
+            WeeklyGoal.objects.bulk_create(goals)
+            return redirect('/notebook/weekly')
+
+    else:
+        weekly_entry_form = WeeklyEntryForm()
+        project_form_set = ProjectFormSet()
+        weekly_goal_form_set = WeeklyGoalFormSet()
+
+    context = {
+        'weekly_entry_form': weekly_entry_form,
+        'project_form_set': project_form_set,
+        'weekly_goal_form_set': weekly_goal_form_set
+    }
+
+    return render(request, 'notebook/weekly_entry_add.html', context)

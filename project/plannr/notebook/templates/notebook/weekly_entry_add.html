@@ -1,8 +1,67 @@
 {% extends "main_base.html" %}
 {% load static %}
 {% block main_content %}
-
-
+<div class="container">
+    <div class="row" style="margin-top: 10%; margin-bottom: 10%">
+        <div class="col-md-6">
+            <h1>New Weekly Entry</h1>
+            <form action="{% url 'weekly_entry_add' %}" method="post" class="inline-form">
+                {% csrf_token %}
+                {{ weekly_entry_form }}
+                <br>
+                <br>
+                {{ project_form_set.management_form }}
+                {% for project_form in project_form_set %}
+                    <div class="project-form-set">
+                        <h3>A Project I'm Working On</h3>
+                        <div class="form-group">
+                            {{ project_form.title.label_tag }}
+                            {{ project_form.title }}
+                        </div>
+                        <div class="form-group">
+                            {{ project_form.description.label_tag }}
+                            {{ project_form.description }}
+                        </div>
+                        <div class="form-group">
+                            {{ project_form.is_complete.label_tag }}
+                            {{ project_form.is_complete }}
+                        </div>
+                    </div>
+                {% endfor %}
+                <br>
+                <br>
+                {{ weekly_goal_form_set.management_form }}
+                {% for weekly_goal_form in weekly_goal_form_set %}
+                    <div class="weekly-goal-form-set">
+                        <h3>A Goal I'm Setting for this Week</h3>
+                        <div class="form-group">
+                            {{ weekly_goal_form.title.label_tag }}
+                            {{ weekly_goal_form.title }}
+                        </div>
+                        <div class="form-group">
+                            {{ weekly_goal_form.description.label_tag}}
+                            {{ weekly_goal_form.description }} 
+                        </div>
+                        <div class="form-group">
+                            {{ weekly_goal_form.goal_type.label_tag}}
+                            {{ weekly_goal_form.goal_type }} 
+                        </div>
+                        <div class="form-group">
+                            {{ weekly_goal_form.is_complete.label_tag}}
+                            {{ weekly_goal_form.is_complete }} 
+                        </div>
+                    </div>
+                {% endfor %}
+                <br>
+                <br>
+                <span class="form-group">
+                    <input type="submit" value="Add Entry" class="btn btn-primary"/>
+                    <a href="{% url 'weekly_list' %}" class="btn btn-danger">Cancel</a>
+                </span>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block specific_scripts %}
@@ -10,8 +69,12 @@
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/jquery_formset.js' %}"></script>
 <script>
-    $('.task-form-set').formset({
-        addText: 'Add task',
+    $('.project-form-set').formset({
+        addText: 'Add project',
+        deleteText: 'Remove'
+    });
+    $('.weekly-goal-form-set').formset({
+        addText: 'Add weekly goal',
         deleteText: 'Remove'
     });
 </script>

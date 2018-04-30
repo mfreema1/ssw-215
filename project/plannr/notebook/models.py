@@ -33,6 +33,21 @@ class WeeklyEntry(models.Model):
     class Meta:
         ordering = ['week_start']
 
+    def __str__(self):
+        """
+        Weekly entries should probably use the starting date of the week for displays
+        """
+        return str(self.week_start)
+
+    def get_absolute_url(self):
+        """
+        Returns the url to access the details of this entry
+        """
+        return reverse('weekly_detail', args=[str(self.id)])
+
+    def is_viewable_by(self, user):
+        return self.author == user
+
 class MonthlyEntry(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     habit = models.CharField(max_length=20)

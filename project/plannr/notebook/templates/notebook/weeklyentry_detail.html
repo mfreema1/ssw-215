@@ -1,1 +1,20 @@
 {% extends "notebook/weeklysection.html" %}
+
+{% block content %}
+    {% if has_access_to_entry %}
+        <h1>{{ weeklyentry.week_start }}</h1>
+        {% if weeklyentry.project_set %}
+            <ul>
+            {% for project in weeklyentry.project_set.all %}
+                <li>
+                    {{ project.title }}
+                </li>
+                <li>{{ project.description }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% else %}
+        <h1>Oops! Looks like something went wrong...</h1>
+        <h3>We can't display this page as it doesn't belong to you.  If you think this is an error, be sure to send us an email!</h3>
+    {% endif %}
+{% endblock %}

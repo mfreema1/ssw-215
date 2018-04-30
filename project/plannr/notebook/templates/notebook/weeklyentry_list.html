@@ -1,1 +1,25 @@
 {% extends "notebook/weeklysection.html" %}
+
+{% block content %}
+    <h1>Your Weekly Entries:</h1>
+    <p>Here is where you'll find all of the weekly entries you've placed in your Plannr.  A weekly entry is essentially a block that you can use
+        to set up projects for the coming week, as well as to set goals for yourself.  We offer suggestions for types of goals you should probably be looking
+        to set for yourself -- namely in the areas of yourself, your family, your relationships, and your work.  Feel free to take liberties with these 
+        and set as many as you feel comfortable with.
+    </p>
+    <p>We find that people tend to accomplish what they set out to get done.  If you're consistent with setting goals and coming back to update them once
+        you've completed them, then you should be well on your way to bigger goals and a better life!  At the same time, be patient with yourself and with
+        your goals -- burning yourself out with work is never a good thing.
+    </p>
+    {% if weeklyentry_list %}
+    <ul>
+        {% for entry in weeklyentry_list %}
+        <li>
+            <a href="{{ entry.get_absolute_url }}">{{ entry.week_start }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p><strong>It appears you have no weekly entries.  Why not <a href="/notebook/weekly/add">add one?</a></strong></p>
+    {% endif %}
+{% endblock %}

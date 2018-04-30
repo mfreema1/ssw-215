@@ -80,7 +80,7 @@ class ProjectForm(ModelForm):
         super(ProjectForm, self).__init__(*args, **kwargs)
         self.fields['title'].widget.attrs.update({'class':'form-control'})
         self.fields['description'].widget.attrs.update({'class':'form-control'})
-        self.fields['is_complete'].widget.attrs.update({'class':'form-control'})
+        #self.fields['is_complete'].widget.attrs.update({'class':'form-control'})
 
 class WeeklyGoalForm(ModelForm):
     class Meta:
@@ -92,4 +92,4 @@ class WeeklyGoalForm(ModelForm):
         self.fields['title'].widget.attrs.update({'class':'form-control'})
         self.fields['description'].widget.attrs.update({'class':'form-control'})
         self.fields['goal_type'].widget.attrs.update({'class':'form-control'})
-        self.fields['is_complete'].widget.attrs.update({'class':'form-control'})
+        #self.fields['is_complete'].widget.attrs.update({'class':'form-control'})
