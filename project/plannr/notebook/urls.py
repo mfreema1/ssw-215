@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 
 #map our index function to the root of our notebook app 
 urlpatterns = [
