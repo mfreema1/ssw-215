@@ -1,0 +1,18 @@
+{% extends "main_base.html" %}
+{% load static %}
+{% block main_content %}
+
+
+{% endblock %}
+
+{% block specific_scripts %}
+<!-- Add in our scripts to handle the dynamic formsetting -->
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/jquery_formset.js' %}"></script>
+<script>
+    $('.task-form-set').formset({
+        addText: 'Add task',
+        deleteText: 'Remove'
+    });
+</script>
+{% endblock %}

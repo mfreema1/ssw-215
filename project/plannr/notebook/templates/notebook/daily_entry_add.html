@@ -8,16 +8,47 @@
             <form action="{% url 'daily_entry_add' %}" method="post" class="inline-form">
                 {% csrf_token %}
                 {{ daily_entry_form }}
-
+                <br>
+                <br>
+                {{ thankful_for_form_set.management_form }}
+                {% for thankful_for_form in thankful_for_form_set %}
+                    <div class="thankful-for-form-set">
+                        <h3>Something I'm Thankful For</h3>
+                        <div class="form-group">
+                            {{ thankful_for_form.title.label_tag }}
+                            {{ thankful_for_form.title }}
+                        </div>
+                        <div class="form-group">
+                            {{ thankful_for_form.description.label_tag }}
+                            {{ thankful_for_form.description }}
+                        </div>
+                    </div>
+                {% endfor %}
+                <br>
+                <br>
+                {{ looking_forward_form_set.management_form }}
+                {% for looking_forward_form in looking_forward_form_set %}
+                    <div class="looking-forward-form-set">
+                        <h3>Something I'm Looking Forward To</h3>
+                        <div class="form-group">
+                            {{ looking_forward_form.title.label_tag }}
+                            {{ looking_forward_form.title }}
+                        </div>
+                        <div class="form-group">
+                            {{ looking_forward_form.description.label_tag}}
+                            {{ looking_forward_form.description }} 
+                        </div>
+                    </div>
+                {% endfor %}
+                <br>
+                <br>
                 {{ task_form_set.management_form }}
-
                 {% for task_form in task_form_set %}
                     <div class="task-form-set">
                         <h3>New Task</h3>
                         <div class="form-group">
                             {{ task_form.title.label_tag }}
                             {{ task_form.title }}
-                            {{ task_form.title.help_text }}
                         </div>
                         <div class="form-group">
                             {{ task_form.start_time.label_tag }}
@@ -39,7 +70,10 @@
                 {% endfor %}
                 <br>
                 <br>
-                <input type="submit" value="Add Entry" class="btn btn-primary"/>
+                <span class="form-group">
+                    <input type="submit" value="Add Entry" class="btn btn-primary"/>
+                    <a href="{% url 'daily_list' %}" class="btn btn-danger">Cancel</a>
+                </span>
             </form>
         </div>
     </div>
@@ -55,6 +89,14 @@
     $('.task-form-set').formset({
         addText: 'Add task',
         deleteText: 'Remove'
+    });
+    $('.thankful-for-form-set').formset({
+        addText: "Add an item I'm thankful for",
+        deleteText: "Remove"
+    });
+    $('.looking-forward-form-set').formset({
+        addText: "Add something I'm looking forward to",
+        deleteText: "Remove"
     });
 </script>
 {% endblock %}

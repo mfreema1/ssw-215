@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import DailyEntry, Task, WeeklyEntry #and other things
+from .models import DailyEntry, Task, LookingForwardTo, ThankfulFor 
+from .models import WeeklyEntry, Project, WeeklyGoal
 from django.contrib.auth.decorators import login_required # allow auth checking for function based views
 from django.contrib.auth.mixins import LoginRequiredMixin # allow auth checking for class based views
 
@@ -104,7 +105,7 @@ def add_daily_entry(request):
         looking_forward_form_set = LookingForwardFormSet(request.POST)
         thankful_for_form_set = ThankfulForFormSet(request.POST)
 
-        if daily_entry_form.is_valid() and task_form_set.is_valid():
+        if daily_entry_form.is_valid() and task_form_set.is_valid() and looking_forward_form_set.is_valid() and thankful_for_form_set.is_valid():
             tasks = []
             looking = []
             thankful = []
@@ -122,15 +123,27 @@ def add_daily_entry(request):
                 end_time = task_form.cleaned_data.get('end_time')
                 is_complete = task_form.cleaned_data.get('is_complete')
                 description = task_form.cleaned_data.get('description')
-            #TODO: handle the rest of the forms
-
                 #so long as the task has a title, append it to the list of tasks
                 if title:
                     tasks.append(Task(entry=entry, title=title, start_time=start_time,
                     end_time=end_time, is_complete=is_complete, description=description))
 
-                Task.objects.bulk_create(tasks)
-                return redirect('/notebook/daily')
+            for looking_forward_to_form  in looking_forward_form_set:
+                title = looking_forward_to_form.cleaned_data.get('title')
+                description = looking_forward_to_form.cleaned_data.get('description')
+                if title:
+                    looking.append(LookingForwardTo(entry=entry, title=title, description=description))
+
+            for thankful_for_form in thankful_for_form_set:
+                title = thankful_for_form.cleaned_data.get('title')
+                description = thankful_for_form.cleaned_data.get('description')
+                if title:
+                    thankful.append(ThankfulFor(entry=entry, title=title, description=description))
+            
+            ThankfulFor.objects.bulk_create(thankful)
+            LookingForwardTo.objects.bulk_create(looking)
+            Task.objects.bulk_create(tasks)
+            return redirect('/notebook/daily')
 
     else:
         daily_entry_form = DailyEntryForm()
@@ -146,5 +159,3 @@ def add_daily_entry(request):
     }
 
     return render(request, 'notebook/daily_entry_add.html', context)
-
-
