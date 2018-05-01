@@ -86,17 +86,19 @@
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/jquery_formset.js' %}"></script>
 <script>
-    $('.task-form-set').formset({
-        addText: 'Add task',
-        deleteText: 'Remove'
-    });
     $('.thankful-for-form-set').formset({
         addText: "Add an item I'm thankful for",
         deleteText: "Remove"
     });
+    
     $('.looking-forward-form-set').formset({
         addText: "Add something I'm looking forward to",
         deleteText: "Remove"
+    });
+
+    $('.task-form-set').formset({
+        addText: 'Add task',
+        deleteText: 'Remove'
     });
 </script>
 {% endblock %}

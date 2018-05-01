@@ -2,15 +2,35 @@
 {% block content %}
     {% if has_access_to_entry %}
         <h1>{{ dailyentry.entry_date }}</h1>
-        {% if dailyentry.task_set %}
-            <ul>
-            {% for task in dailyentry.task_set.all %}
-                <li>
-                    {{ task.title }}
-                </li>
-                <li>{{ task.description }}</li>
-            {% endfor %}
-            </ul>
+        {% if dailyentry.tasks %}
+            <ol>
+                {% for task in dailyentry.tasks.all %}
+                    <li>
+                        <h3>{{ task.title }}</h3>
+                        <p>{{ task.description }}</p>
+                    </li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+        {% if dailyentry.thanks %}
+            <ol>
+                {% for item in dailyentry.thanks.all %}
+                    <li>
+                        <h3>{{ item.title }}</h3>
+                        <p>{{ item.description }}</p>
+                    </li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+        {% if dailyentry.looks %}
+            <ol>
+                {% for item in dailyentry.looks.all %}
+                    <li>
+                        <h3>{{ item.title }}</h3>
+                        <p>{{ item.description }}</p>
+                    </li>
+                {% endfor %}
+            </ol>
         {% endif %}
     {% else %}
         <h1>Oops! Looks like something went wrong...</h1>

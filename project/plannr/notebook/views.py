@@ -103,9 +103,9 @@ def add_daily_entry(request):
 
         # make our instances
         daily_entry_form = DailyEntryForm(request.POST)
-        task_form_set = TaskFormSet(request.POST)
-        looking_forward_form_set = LookingForwardFormSet(request.POST)
-        thankful_for_form_set = ThankfulForFormSet(request.POST)
+        task_form_set = TaskFormSet(request.POST, prefix='tasks')
+        looking_forward_form_set = LookingForwardFormSet(request.POST, prefix='looking_forward_tos')
+        thankful_for_form_set = ThankfulForFormSet(request.POST, prefix='thankful_fors')
 
         if daily_entry_form.is_valid() and task_form_set.is_valid() and looking_forward_form_set.is_valid() and thankful_for_form_set.is_valid():
             tasks = []
@@ -142,16 +142,16 @@ def add_daily_entry(request):
                 if title:
                     thankful.append(ThankfulFor(entry=entry, title=title, description=description))
             
-            ThankfulFor.objects.bulk_create(thankful)
-            LookingForwardTo.objects.bulk_create(looking)
-            Task.objects.bulk_create(tasks)
+            #ThankfulFor.objects.bulk_create(thankful)
+            #LookingForwardTo.objects.bulk_create(looking)
+            #Task.objects.bulk_create(tasks)
             return redirect('/notebook/daily')
 
     else:
         daily_entry_form = DailyEntryForm()
-        task_form_set = TaskFormSet()
-        looking_forward_form_set = LookingForwardFormSet()
-        thankful_for_form_set = ThankfulForFormSet()
+        task_form_set = TaskFormSet(prefix='tasks')
+        looking_forward_form_set = LookingForwardFormSet(prefix='looking_forward_tos')
+        thankful_for_form_set = ThankfulForFormSet(prefix='thankful_fors')
 
     context = {
         'daily_entry_form': daily_entry_form,

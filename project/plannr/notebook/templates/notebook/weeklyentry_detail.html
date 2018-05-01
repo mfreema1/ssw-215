@@ -13,6 +13,14 @@
             {% endfor %}
             </ul>
         {% endif %}
+        {% if weeklyentry.weeklygoal_set %}
+            {% for goal in weeklygoal_set.all %}
+                <li>
+                    {{goal.title}}
+                </li>
+                <li>{{goal.description}}</li>
+            {% endfor %}
+        {% endif %}
     {% else %}
         <h1>Oops! Looks like something went wrong...</h1>
         <h3>We can't display this page as it doesn't belong to you.  If you think this is an error, be sure to send us an email!</h3>

@@ -73,7 +73,7 @@ class MonthlyEntry(models.Model):
 
 #Daily tables
 class Task(models.Model):
-    entry = models.ForeignKey(DailyEntry, on_delete=models.CASCADE, null=True)
+    entry = models.ForeignKey(DailyEntry, related_name="tasks", on_delete=models.CASCADE, null=True)
     start_time = models.TimeField()
     end_time = models.TimeField()
     is_complete = models.BooleanField()
@@ -81,12 +81,12 @@ class Task(models.Model):
     description = models.TextField()
 
 class ThankfulFor(models.Model):
-    entry = models.ForeignKey(DailyEntry, on_delete=models.CASCADE, null=True)
+    entry = models.ForeignKey(DailyEntry, related_name="thanks", on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=32)
     description = models.TextField()
 
 class LookingForwardTo(models.Model):
-    entry = models.ForeignKey(DailyEntry, on_delete=models.CASCADE, null=True)
+    entry = models.ForeignKey(DailyEntry, related_name="looks", on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=32)
     description = models.TextField()
 

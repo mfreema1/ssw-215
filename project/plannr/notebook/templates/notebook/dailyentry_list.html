@@ -22,3 +22,8 @@
         <p><strong>It appears you have no daily entries.  Wanna <a href="/notebook/daily/add">add one?</a></strong></p>
     {% endif %}
 {% endblock %}
+
+{% block button %}
+<br>
+<a href="{% url 'daily_entry_add' %}" class="btn btn-primary">Add Entry</a>
+{% endblock %}
