@@ -92,13 +92,13 @@ class LookingForwardTo(models.Model):
 
 #Weekly tables
 class Project(models.Model):
-    entry = models.ForeignKey(WeeklyEntry, on_delete=models.CASCADE, null=True)
+    entry = models.ForeignKey(WeeklyEntry, related_name="projects", on_delete=models.CASCADE, null=True)
     is_complete = models.BooleanField()
     title = models.CharField(max_length=32)
     description = models.TextField()
 
 class WeeklyGoal(models.Model):
-    entry = models.ForeignKey(WeeklyEntry, on_delete=models.CASCADE, null=True)
+    entry = models.ForeignKey(WeeklyEntry, related_name="goals", on_delete=models.CASCADE, null=True)
     #probably some way to inherit this
     GOAL_TYPES = (
         ('FAMILY', 'Family'),

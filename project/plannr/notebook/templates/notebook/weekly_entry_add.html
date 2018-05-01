@@ -71,11 +71,13 @@
 <script>
     $('.project-form-set').formset({
         addText: 'Add project',
-        deleteText: 'Remove'
+        deleteText: 'Remove',
+        prefix: 'projects'
     });
     $('.weekly-goal-form-set').formset({
         addText: 'Add weekly goal',
-        deleteText: 'Remove'
+        deleteText: 'Remove',
+        prefix: 'goals'
     });
 </script>
 {% endblock %}

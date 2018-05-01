@@ -2,25 +2,38 @@
 
 {% block content %}
     {% if has_access_to_entry %}
-        <h1>{{ weeklyentry.week_start }}</h1>
-        {% if weeklyentry.project_set %}
-            <ul>
-            {% for project in weeklyentry.project_set.all %}
-                <li>
-                    {{ project.title }}
-                </li>
-                <li>{{ project.description }}</li>
-            {% endfor %}
-            </ul>
+        <h1>Week Start: {{ weeklyentry.week_start }}</h1>
+        {% if weeklyentry.projects %}
+        <br>
+        <h2>My Weekly Projects:</h2>
+            <ol>
+                {% for project in weeklyentry.projects.all %}
+                    <li>
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.description }}</p>
+                        <p>Is completed: {{ project.is_complete }}</p>
+                    </li>
+                {% endfor %}
+            </ol>
         {% endif %}
-        {% if weeklyentry.weeklygoal_set %}
-            {% for goal in weeklygoal_set.all %}
-                <li>
-                    {{goal.title}}
-                </li>
-                <li>{{goal.description}}</li>
-            {% endfor %}
+        {% if weeklyentry.goals %}
+        <br>
+        <h2>My Goals for this Week:</h2>
+            <ol>
+                {% for goal in weeklyentry.goals.all %}
+                    <li>
+                        <h3>{{ goal.title }}</h3>
+                        <p>{{ goal.description }}</p>
+                        {% if goal.goal_type %}
+                            <p>Goal type: {{ goal.goal_type }}</p>
+                        {% endif %}
+                        <p>Is completed: {{ goal.is_complete }}</p>
+                    </li>
+                {% endfor %}
+            </ol>
         {% endif %}
+        <br>
+        <!-- A little space at the bottom between the page -->
     {% else %}
         <h1>Oops! Looks like something went wrong...</h1>
         <h3>We can't display this page as it doesn't belong to you.  If you think this is an error, be sure to send us an email!</h3>

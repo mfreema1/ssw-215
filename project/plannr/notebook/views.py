@@ -49,6 +49,8 @@ class WeeklyListView(LoginRequiredMixin, ListView):
     model = WeeklyEntry
     login_url = '/accounts/login/'
     paginate_by = 10
+    def get_queryset(self):
+        return WeeklyEntry.objects.filter(author=self.request.user)
 
 class WeeklyDetailView(LoginRequiredMixin, DetailView):
     model = WeeklyEntry
@@ -142,9 +144,9 @@ def add_daily_entry(request):
                 if title:
                     thankful.append(ThankfulFor(entry=entry, title=title, description=description))
             
-            #ThankfulFor.objects.bulk_create(thankful)
-            #LookingForwardTo.objects.bulk_create(looking)
-            #Task.objects.bulk_create(tasks)
+            ThankfulFor.objects.bulk_create(thankful)
+            LookingForwardTo.objects.bulk_create(looking)
+            Task.objects.bulk_create(tasks)
             return redirect('/notebook/daily')
 
     else:
@@ -176,8 +178,8 @@ def add_weekly_entry(request):
 
         #generate those instances
         weekly_entry_form = WeeklyEntryForm(request.POST)
-        project_form_set = ProjectFormSet(request.POST)
-        weekly_goal_form_set = WeeklyGoalFormSet(request.POST)
+        project_form_set = ProjectFormSet(request.POST, prefix='projects')
+        weekly_goal_form_set = WeeklyGoalFormSet(request.POST, prefix='goals')
 
         if weekly_entry_form.is_valid() and project_form_set.is_valid() and weekly_goal_form_set.is_valid():
             projects = []
@@ -211,8 +213,8 @@ def add_weekly_entry(request):
 
     else:
         weekly_entry_form = WeeklyEntryForm()
-        project_form_set = ProjectFormSet()
-        weekly_goal_form_set = WeeklyGoalFormSet()
+        project_form_set = ProjectFormSet(prefix='projects')
+        weekly_goal_form_set = WeeklyGoalFormSet(prefix='goals')
 
     context = {
         'weekly_entry_form': weekly_entry_form,

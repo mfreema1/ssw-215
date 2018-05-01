@@ -1,18 +1,10 @@
 {% extends "notebook/dailysection.html" %}
 {% block content %}
     {% if has_access_to_entry %}
-        <h1>{{ dailyentry.entry_date }}</h1>
-        {% if dailyentry.tasks %}
-            <ol>
-                {% for task in dailyentry.tasks.all %}
-                    <li>
-                        <h3>{{ task.title }}</h3>
-                        <p>{{ task.description }}</p>
-                    </li>
-                {% endfor %}
-            </ol>
-        {% endif %}
+        <h1>Entry Date: {{ dailyentry.entry_date }}</h1>
         {% if dailyentry.thanks %}
+        <br>
+        <h2>Things I'm Thankful For:</h2>
             <ol>
                 {% for item in dailyentry.thanks.all %}
                     <li>
@@ -23,6 +15,8 @@
             </ol>
         {% endif %}
         {% if dailyentry.looks %}
+        <br>
+        <h2>Things I'm Looking Forward To</h2>
             <ol>
                 {% for item in dailyentry.looks.all %}
                     <li>
@@ -32,6 +26,27 @@
                 {% endfor %}
             </ol>
         {% endif %}
+        {% if dailyentry.tasks %}
+        <br>
+        <h2>My Tasks:</h2>
+            <ol>
+                {% for task in dailyentry.tasks.all %}
+                    <li>
+                        <h3>{{ task.title }}</h3>
+                        <p>{{ task.description }}</p>
+                        {% if task.start_time %}
+                            <p>Start Time: {{task.start_time}}</p>
+                        {% endif %}
+                        {% if task.end_time %}
+                            <p>End Time: {{task.end_time}}</p>
+                        {% endif %}
+                        <p>Is completed: {{task.is_complete}}</p>
+                    </li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+        <br>
+        <!-- A little space between the button and the end of the form -->
     {% else %}
         <h1>Oops! Looks like something went wrong...</h1>
         <h3>We can't display this page as it doesn't belong to you.  If you think this is an error, be sure to send us an email!</h3>

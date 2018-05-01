@@ -23,3 +23,8 @@
         <p><strong>It appears you have no weekly entries.  Why not <a href="/notebook/weekly/add">add one?</a></strong></p>
     {% endif %}
 {% endblock %}
+
+{% block button %}
+<br>
+<a href="{% url 'weekly_entry_add' %}" class="btn btn-primary">Add Entry</a>
+{% endblock %}

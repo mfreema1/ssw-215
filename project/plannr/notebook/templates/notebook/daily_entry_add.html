@@ -88,17 +88,20 @@
 <script>
     $('.thankful-for-form-set').formset({
         addText: "Add an item I'm thankful for",
-        deleteText: "Remove"
+        deleteText: "Remove",
+        prefix: 'thankful_fors'
     });
     
     $('.looking-forward-form-set').formset({
         addText: "Add something I'm looking forward to",
-        deleteText: "Remove"
+        deleteText: "Remove",
+        prefix: 'looking_forward_tos'
     });
 
     $('.task-form-set').formset({
         addText: 'Add task',
-        deleteText: 'Remove'
+        deleteText: 'Remove',
+        prefix: 'tasks'
     });
 </script>
 {% endblock %}
